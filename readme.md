@@ -11,7 +11,7 @@ Milestone 0:
     - PCB File Loading
 
     Milestone 2:  
-    Due: Thursday, October 5 3:30 PM
+    Due: Friday, October 6 5:00 PM
     - Priority scheduling
     - Scheduling statistics
     - Grad Students / Undergrad Bonus:
