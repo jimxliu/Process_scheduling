@@ -44,7 +44,7 @@ TEST (round_robin, nullInputProcessControlBlockDynArray) {
     ScheduleResult_t *sr = new ScheduleResult_t;
     dyn_array_t* pcbs = NULL;
     bool res = round_robin (pcbs,sr,QUANTUM);
-    EXPECT_EQ(false,res);
+    ASSERT_EQ(false,res);
     delete sr;
 
     score+=5;
@@ -55,7 +55,7 @@ TEST (round_robin, nullScheduleResult) {
     ScheduleResult_t *sr = NULL;
     dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
     bool res = round_robin (pcbs,sr,QUANTUM);
-    EXPECT_EQ(false,res);
+    ASSERT_EQ(false,res);
     dyn_array_destroy(pcbs);
 
     score+=5;
@@ -79,9 +79,9 @@ TEST (round_robin, goodInputA) {
     bool res = round_robin (pcbs,sr,QUANTUM);	
     ASSERT_EQ(true,res);
     float answers[3] = {15.666667,5.666667,30};
-    EXPECT_FLOAT_EQ(answers[0],sr->average_wall_clock_time);
-    EXPECT_FLOAT_EQ(answers[1],sr->average_latency_time);
-    EXPECT_EQ(answers[2],sr->total_run_time);
+    ASSERT_FLOAT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_FLOAT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
     dyn_array_destroy(pcbs);
     delete sr;
 
@@ -105,9 +105,9 @@ TEST (round_robin, goodInputB) {
     bool res = round_robin (pcbs,sr,QUANTUM);	
     ASSERT_EQ(true,res);
     float answers[3] = {22.333334,12,31};
-    EXPECT_FLOAT_EQ(answers[0],sr->average_wall_clock_time);
-    EXPECT_EQ(answers[1],sr->average_latency_time);
-    EXPECT_EQ(answers[2],sr->total_run_time);
+    ASSERT_FLOAT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
     dyn_array_destroy(pcbs);
     delete sr;
 
@@ -125,7 +125,7 @@ TEST (priority, nullInputProcessControlBlockDynArray) {
     ScheduleResult_t *sr = new ScheduleResult_t;
     dyn_array_t* pcbs = NULL;
     bool res = priority (pcbs,sr);
-    EXPECT_EQ(false,res);
+    ASSERT_EQ(false,res);
     delete sr;
 
     score+=5;
@@ -135,7 +135,7 @@ TEST (priority, nullScheduleResult) {
     ScheduleResult_t *sr = NULL;
     dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
     bool res = priority (pcbs,sr);
-    EXPECT_EQ(false,res);
+    ASSERT_EQ(false,res);
     dyn_array_destroy(pcbs);
 
     score+=5;
@@ -158,9 +158,9 @@ TEST (priority, goodInputA) {
     bool res = priority (pcbs,sr);
     ASSERT_EQ(true,res);
     float answers[3] = {13,3,30};
-    EXPECT_EQ(answers[0],sr->average_wall_clock_time);
-    EXPECT_EQ(answers[1],sr->average_latency_time);
-    EXPECT_EQ(answers[2],sr->total_run_time);
+    ASSERT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
     dyn_array_destroy(pcbs);
     delete sr;
 
@@ -188,9 +188,9 @@ TEST (priority, goodInputB) {
     bool res = priority (pcbs,sr);
     ASSERT_EQ(true,res);
     float answers[3] = {12,8.2,19};
-    EXPECT_EQ(answers[0],sr->average_wall_clock_time);
-    EXPECT_EQ(answers[1],sr->average_latency_time);
-    EXPECT_EQ(answers[2],sr->total_run_time);
+    ASSERT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
     dyn_array_destroy(pcbs);
     delete sr;
 
@@ -206,7 +206,7 @@ TEST (first_come_first_serve, nullInputProcessControlBlockDynArray) {
     ScheduleResult_t *sr = new ScheduleResult_t;
     dyn_array_t* pcbs = NULL;
     bool res = first_come_first_serve (pcbs,sr);
-    EXPECT_EQ(false,res);
+    ASSERT_EQ(false,res);
     delete sr;
 
     score+=5;
@@ -216,7 +216,7 @@ TEST (first_come_first_serve, nullScheduleResult) {
     ScheduleResult_t *sr = NULL;
     dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
     bool res = first_come_first_serve (pcbs,sr);
-    EXPECT_EQ(false,res);
+    ASSERT_EQ(false,res);
     dyn_array_destroy(pcbs);
 
     score+=5;
@@ -239,9 +239,9 @@ TEST (first_come_first_serve, goodInputA) {
     bool res = first_come_first_serve (pcbs,sr);	
     ASSERT_EQ(true,res);
     float answers[3] = {27,17,30};
-    EXPECT_EQ(answers[0],sr->average_wall_clock_time);
-    EXPECT_EQ(answers[1],sr->average_latency_time);
-    EXPECT_EQ(answers[2],sr->total_run_time);
+    ASSERT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
     dyn_array_destroy(pcbs);
     delete sr;
 
@@ -267,9 +267,9 @@ TEST (first_come_first_serve, goodInputB) {
     bool res = first_come_first_serve (pcbs,sr);	
     ASSERT_EQ(true,res);
     float answers[3] = {16.25,10.25,24};
-    EXPECT_EQ(answers[0],sr->average_wall_clock_time);
-    EXPECT_EQ(answers[1],sr->average_latency_time);
-    EXPECT_EQ(answers[2],sr->total_run_time);
+    ASSERT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
     dyn_array_destroy(pcbs);
     delete sr;
 
@@ -341,8 +341,8 @@ TEST (load_process_control_blocks, fullFoundFile) {
     ASSERT_NE(da, (dyn_array_t*) NULL);
     for (size_t i = 0; i < dyn_array_size(da); ++i) {
         ProcessControlBlock_t * pPCB = (ProcessControlBlock_t *)dyn_array_at(da, i);
-        EXPECT_EQ(pPCB->remaining_burst_time, pcbs[i][0]);
-        EXPECT_EQ(pPCB->priority, pcbs[i][1]);
+        ASSERT_EQ(pPCB->remaining_burst_time, pcbs[i][0]);
+        ASSERT_EQ(pPCB->priority, pcbs[i][1]);
     }
     dyn_array_destroy(da);
 
