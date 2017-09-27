@@ -373,12 +373,8 @@ TEST (first_come_first_serve, badInput) {
     ScheduleResult_t *sr = new ScheduleResult_t;
     dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
 	memset(sr,0,sizeof(ScheduleResult_t));
-    // add PCBs now
-    ProcessControlBlock_t data[3] = {
-        [0] = NULL,
-        [1] = NULL,
-        [2] = NULL
-    };
+    // add PCBs now, but initialize to NULL;
+    ProcessControlBlock_t data[3] = NULL;
     // back loading dyn_array, pull from the back
     dyn_array_push_back(pcbs,&data[2]);
     dyn_array_push_back(pcbs,&data[1]);
