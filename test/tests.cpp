@@ -1,4 +1,3 @@
-
 #include <fcntl.h>
 #include <stdio.h>
 #include "gtest/gtest.h"
@@ -24,7 +23,7 @@ class GradeEnvironment : public testing::Environment {
             total = 160;
 
 #else
-            total = 130;
+            total = 220;
 #endif
         }
         virtual void TearDown() {
@@ -196,7 +195,101 @@ TEST (priority, goodInputB) {
 
     score+=20;
 }
+TEST (priority, goodInputC) {
+    ScheduleResult_t *sr = new ScheduleResult_t;
+    dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
+    memset(sr,0,sizeof(ScheduleResult_t));
+    // add PCBs now
+    ProcessControlBlock_t data[3] = {
+        [0] = {12,1,0},
+        [1] = {3,3,0},
+        [2] = {6,2,0}
+    };
+    // back loading dyn_array, pull from the back
+    dyn_array_push_back(pcbs,&data[2]);
+    dyn_array_push_back(pcbs,&data[1]);
+    dyn_array_push_back(pcbs,&data[0]);
+    bool res = priority (pcbs,sr);
+    ASSERT_EQ(true,res);
+    float answers[3] = {17,10,21};
+    ASSERT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
+    dyn_array_destroy(pcbs);
+    delete sr;
 
+    score+=10;
+}
+
+TEST (priority, goodInputD) {
+    ScheduleResult_t *sr = new ScheduleResult_t;
+    dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
+    memset(sr,0,sizeof(ScheduleResult_t));
+    // add PCBs now
+    ProcessControlBlock_t data[5] = {
+        [0] = {15,2,0},
+        [1] = {3,4,0},
+        [2] = {7,1,0},
+        [3] = {4,5,0},
+        [4] = {8,3,0}
+    };
+    // back loading dyn_array, pull from the back
+    dyn_array_push_back(pcbs,&data[4]);
+    dyn_array_push_back(pcbs,&data[3]);
+    dyn_array_push_back(pcbs,&data[2]);
+    dyn_array_push_back(pcbs,&data[1]);
+    dyn_array_push_back(pcbs,&data[0]);
+    bool res = priority (pcbs,sr);
+    ASSERT_EQ(true,res);
+    float answers[3] = {25.8,18.4,37};
+    ASSERT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
+    dyn_array_destroy(pcbs);
+    delete sr;
+
+    score+=10;
+}
+
+TEST (priority, goodInputE) {
+    ScheduleResult_t *sr = new ScheduleResult_t;
+    dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
+    memset(sr,0,sizeof(ScheduleResult_t));
+    // add PCBs now
+    ProcessControlBlock_t data[10] = {
+        [0] = {1,10,0},
+        [1] = {2,9,0},
+        [2] = {3,8,0},
+        [3] = {4,7,0},
+		[4] = {5,6,0},
+		[5] = {6,5,0},
+		[6] = {7,4,0},
+		[7] = {8,3,0},
+		[8] = {9,2,0},
+		[9] = {10,1,0}
+    };
+    // back loading dyn_array, pull from the back
+    dyn_array_push_back(pcbs,&data[9]);
+    dyn_array_push_back(pcbs,&data[8]);
+    dyn_array_push_back(pcbs,&data[7]);
+    dyn_array_push_back(pcbs,&data[6]);    
+	dyn_array_push_back(pcbs,&data[5]);
+    dyn_array_push_back(pcbs,&data[4]);
+    dyn_array_push_back(pcbs,&data[3]);
+    dyn_array_push_back(pcbs,&data[2]);
+    dyn_array_push_back(pcbs,&data[1]);
+    dyn_array_push_back(pcbs,&data[0]);
+    bool res = priority (pcbs,sr);
+    ASSERT_EQ(true,res);
+    float answers[3] = {38.4,33,55};
+    ASSERT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
+    dyn_array_destroy(pcbs);
+    delete sr;
+
+    score+=10;
+}
 
 /*
  * * First Come First Serve  TEST CASES
