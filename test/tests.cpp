@@ -369,28 +369,6 @@ TEST (first_come_first_serve, goodInputB) {
     score+=20;
 }
 
-TEST (first_come_first_serve, badInput) {
-    ScheduleResult_t *sr = new ScheduleResult_t;
-    dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
-	memset(sr,0,sizeof(ScheduleResult_t));
-    // add PCBs now, but initialize to NULL;
-    ProcessControlBlock_t data[3] = {
-        [0] = {-4,0,0},
-        [1] = {2,0,0},
-        [2] = {6,0,0}
-    };
-    // back loading dyn_array, pull from the back
-    dyn_array_push_back(pcbs,&data[2]);
-    dyn_array_push_back(pcbs,&data[1]);
-    dyn_array_push_back(pcbs,&data[0]);	
-    bool res = first_come_first_serve (pcbs,sr);
-    ASSERT_EQ(false,res);
-    dyn_array_destroy(pcbs);
-	delete sr;
-
-    score+=10;
-}
-
 TEST (first_come_first_serve, goodInputC) {
     ScheduleResult_t *sr = new ScheduleResult_t;
     dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
@@ -462,6 +440,33 @@ TEST (first_come_first_serve, goodInputD) {
     bool res = first_come_first_serve (pcbs,sr);	
     ASSERT_EQ(true,res);
     float answers[3] = {38.5,33,55};
+    ASSERT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
+    dyn_array_destroy(pcbs);
+    delete sr;
+
+    score+=10;
+}
+
+TEST (first_come_first_serve, goodInputE) {
+    ScheduleResult_t *sr = new ScheduleResult_t;
+    dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
+    memset(sr,0,sizeof(ScheduleResult_t));
+    // add PCBs now
+    ProcessControlBlock_t data[10] = {
+        [0] = {3,0,0},
+        [1] = {3,0,0},
+		[2] = {24,0,0}
+    };
+    // back loading dyn_array, pull from the back
+
+    dyn_array_push_back(pcbs,&data[2]);
+    dyn_array_push_back(pcbs,&data[1]);		
+    dyn_array_push_back(pcbs,&data[0]);	
+    bool res = first_come_first_serve (pcbs,sr);	
+    ASSERT_EQ(true,res);
+    float answers[3] = {10,2,30};
     ASSERT_EQ(answers[0],sr->average_wall_clock_time);
     ASSERT_EQ(answers[1],sr->average_latency_time);
     ASSERT_EQ(answers[2],sr->total_run_time);
