@@ -486,20 +486,25 @@ TEST (load_process_control_blocks, nullFilePath) {
     score+=5;
 }
 
-TEST (load_process_control_blocks, noFormatFile) {
-
-    dyn_array_t* da = load_process_control_blocks ("noFORMAT");
-    ASSERT_EQ(da,(dyn_array_t*)NULL);
-
-    score+=10;
-}
-
 TEST (load_process_control_blocks, notFoundFile) {
 
     dyn_array_t* da = load_process_control_blocks ("NotARealFile.Awesome");
     ASSERT_EQ(da,(dyn_array_t*)NULL);
 
     score+=5;
+}
+
+TEST (load_process_control_blocks, noFormatFile) {
+	const char* fname = "noFormat";
+ 	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP;
+    int flags = O_CREAT | O_TRUNC | O_WRONLY;
+    int fd = open(fname, flags, mode);
+    close(fd);
+
+    dyn_array_t* da = load_process_control_blocks (fname);
+    ASSERT_EQ(da,(dyn_array_t*)NULL);
+
+    score+=10;
 }
 
 TEST (load_process_control_blocks, emptyFoundFile) {
