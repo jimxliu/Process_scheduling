@@ -25,7 +25,10 @@ bool first_come_first_serve(dyn_array_t *ready_queue, ScheduleResult_t *result) 
 				return false;
 			}	
 			latency_total = latency_total + run_total;
-  			run_total = run_total + pcb->remaining_burst_time;
+  			if(pcb->remaining_burst_time < 0){
+				return false;
+			}
+			run_total = run_total + pcb->remaining_burst_time;
 			if(!dyn_array_pop_back(ready_queue)){
 				return false;
 			}
@@ -62,9 +65,12 @@ bool round_robin(dyn_array_t *ready_queue, ScheduleResult_t *result, size_t quan
 #endif
 
 dyn_array_t *load_process_control_blocks(const char *input_file) {
-    int fd = open(input_file,O_RDONLY);
+	int fd = open(input_file,O_RDONLY);
 	if(fd < 0){
 		return NULL; // Couldn't open the input file
+	}
+	if(!strrchr(input_file, '.')){
+		return NULL; // File doesn't have format
 	}
 	uint32_t pcb_num;
 	if(read(fd, &pcb_num, sizeof(uint32_t)) != sizeof(uint32_t)){
