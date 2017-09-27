@@ -369,6 +369,107 @@ TEST (first_come_first_serve, goodInputB) {
     score+=20;
 }
 
+TEST (first_come_first_serve, badInput) {
+    ScheduleResult_t *sr = new ScheduleResult_t;
+    dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
+	memset(sr,0,sizeof(ScheduleResult_t));
+    // add PCBs now
+    ProcessControlBlock_t data[3] = {
+        [0] = NULL,
+        [1] = NULL,
+        [2] = NULL
+    };
+    // back loading dyn_array, pull from the back
+    dyn_array_push_back(pcbs,&data[2]);
+    dyn_array_push_back(pcbs,&data[1]);
+    dyn_array_push_back(pcbs,&data[0]);	
+    bool res = first_come_first_serve (pcbs,sr);
+    ASSERT_EQ(false,res);
+    dyn_array_destroy(pcbs);
+	delete sr;
+
+    score+=10;
+}
+
+TEST (first_come_first_serve, goodInputC) {
+    ScheduleResult_t *sr = new ScheduleResult_t;
+    dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
+    memset(sr,0,sizeof(ScheduleResult_t));
+    // add PCBs now
+    ProcessControlBlock_t data[10] = {
+        [0] = {1,0,0},
+        [1] = {2,0,0},
+        [2] = {3,0,0},
+        [3] = {4,0,0},
+		[4] = {5,0,0},
+		[5] = {6,0,0},
+        [6] = {7,0,0},
+        [7] = {8,0,0},
+		[8] = {9,0,0},
+		[9] = {10,0,0}
+    };
+    // back loading dyn_array, pull from the back
+    dyn_array_push_back(pcbs,&data[9]);
+    dyn_array_push_back(pcbs,&data[8]);    
+	dyn_array_push_back(pcbs,&data[7]);
+    dyn_array_push_back(pcbs,&data[6]);
+    dyn_array_push_back(pcbs,&data[5]);		
+    dyn_array_push_back(pcbs,&data[4]);
+    dyn_array_push_back(pcbs,&data[3]);
+    dyn_array_push_back(pcbs,&data[2]);
+    dyn_array_push_back(pcbs,&data[1]);		
+    dyn_array_push_back(pcbs,&data[0]);	
+    bool res = first_come_first_serve (pcbs,sr);	
+    ASSERT_EQ(true,res);
+    float answers[3] = {22,16.5,55};
+    ASSERT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
+    dyn_array_destroy(pcbs);
+    delete sr;
+
+    score+=10;
+}
+
+TEST (first_come_first_serve, goodInputC) {
+    ScheduleResult_t *sr = new ScheduleResult_t;
+    dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
+    memset(sr,0,sizeof(ScheduleResult_t));
+    // add PCBs now
+    ProcessControlBlock_t data[10] = {
+        [0] = {1,0,0},
+        [1] = {2,0,0},
+        [2] = {3,0,0},
+        [3] = {4,0,0},
+		[4] = {5,0,0},
+		[5] = {6,0,0},
+        [6] = {7,0,0},
+        [7] = {8,0,0},
+		[8] = {9,0,0},
+		[9] = {10,0,0}
+    };
+    // back loading dyn_array, pull from the back
+    dyn_array_push_back(pcbs,&data[9]);
+    dyn_array_push_back(pcbs,&data[8]);    
+	dyn_array_push_back(pcbs,&data[7]);
+    dyn_array_push_back(pcbs,&data[6]);
+    dyn_array_push_back(pcbs,&data[5]);		
+    dyn_array_push_back(pcbs,&data[4]);
+    dyn_array_push_back(pcbs,&data[3]);
+    dyn_array_push_back(pcbs,&data[2]);
+    dyn_array_push_back(pcbs,&data[1]);		
+    dyn_array_push_back(pcbs,&data[0]);	
+    bool res = first_come_first_serve (pcbs,sr);	
+    ASSERT_EQ(true,res);
+    float answers[3] = {38.5,33,55};
+    ASSERT_EQ(answers[0],sr->average_wall_clock_time);
+    ASSERT_EQ(answers[1],sr->average_latency_time);
+    ASSERT_EQ(answers[2],sr->total_run_time);
+    dyn_array_destroy(pcbs);
+    delete sr;
+
+    score+=10;
+}
 
 /*
  * LOAD PROCESS CONTROL BLOCKS TEST CASES
