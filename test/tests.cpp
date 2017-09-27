@@ -281,7 +281,7 @@ TEST (priority, goodInputE) {
     dyn_array_push_back(pcbs,&data[0]);
     bool res = priority (pcbs,sr);
     ASSERT_EQ(true,res);
-    float answers[3] = {38.4,33,55};
+    float answers[3] = {38.5,33,55};
     ASSERT_EQ(answers[0],sr->average_wall_clock_time);
     ASSERT_EQ(answers[1],sr->average_latency_time);
     ASSERT_EQ(answers[2],sr->total_run_time);
