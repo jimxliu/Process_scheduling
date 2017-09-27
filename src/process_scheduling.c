@@ -14,27 +14,78 @@ void virtual_cpu(ProcessControlBlock_t *process_control_block) {
 }
 
 bool first_come_first_serve(dyn_array_t *ready_queue, ScheduleResult_t *result) {
-    // You need to remove this when you begin implementation.
-    abort();  // replace me with implementation.
-    return false;
+	if(ready_queue && result){
+		size_t size = dyn_array_size(ready_queue);
+      		uint32_t latency_total = 0;
+		unsigned long run_total = 0;
+		while(dyn_array_size(ready_queue) > 0){
+			// push the first object last, pull it first from back
+			ProcessControlBlock_t *pcb = dyn_array_back(ready_queue); 
+			if(!pcb){
+				return false;
+			}	
+			latency_total = latency_total + run_total;
+  			run_total = run_total + pcb->remaining_burst_time;
+			if(!dyn_array_pop_back(ready_queue)){
+				return false;
+			}
+		}	
+		result->average_latency_time = (float) latency_total/size;
+		result->average_wall_clock_time = (float) (latency_total + run_total)/size;
+		result->total_run_time = run_total;	
+		return true;
+	}
+	return false;
+}
+
+int compare_reversed_priority(const void *a, const void *b){
+	ProcessControlBlock_t *pa = (ProcessControlBlock_t *)a;	
+	ProcessControlBlock_t *pb = (ProcessControlBlock_t *)b;
+	return (int) (pb->priority - pa->priority);	
 }
 
 bool priority(dyn_array_t *ready_queue, ScheduleResult_t *result) {
-    // You need to remove this when you begin implementation.
-   abort();  // replace me with implementation.
-   return false;   
+	if(ready_queue && result){
+		if(dyn_array_sort(ready_queue, compare_reversed_priority)){
+			if(first_come_first_serve(ready_queue, result)){
+				return true;
+			}		
+		}	
+	}
+   	return false;   
 }
 
 #ifdef GRAD_TESTS
 bool round_robin(dyn_array_t *ready_queue, ScheduleResult_t *result, size_t quantum) {
-    // You need to remove this when you begin implementation.
-    abort();  // replace me with implementation.
     return false;
 }
 #endif
 
 dyn_array_t *load_process_control_blocks(const char *input_file) {
-    // You need to remove this when you begin implementation.
-    abort();  // replace me with implementation.
-    return NULL;
+    int fd = open(input_file,O_RDONLY);
+	if(fd < 0){
+		return NULL; // Couldn't open the input file
+	}
+	uint32_t pcb_num;
+	if(read(fd, &pcb_num, sizeof(uint32_t)) != sizeof(uint32_t)){
+		return NULL; // the file content is empty or wrong
+	}
+	uint32_t pcbs[pcb_num][2];
+	if(read(fd, pcbs, pcb_num * sizeof(uint32_t) * 2) != (pcb_num * sizeof(uint32_t) * 2)){ // the file PCB data size is wrong.
+		return NULL; 
+	}
+	uint32_t leftover = 0; // Check if file is empty
+	if(read(fd, &leftover, sizeof(uint32_t)) > 0){
+		close(fd);
+		return NULL; // if not, meaning some leftover data, incorrect PCB file.
+	}
+	dyn_array_t * da = dyn_array_create(0, sizeof(ProcessControlBlock_t),NULL); 
+	int i;
+	for(i = 0; i < pcb_num; ++i){
+		ProcessControlBlock_t p = {pcbs[i][0], pcbs[i][1], 0};
+		if(!dyn_array_push_back(da, &p)){
+			return NULL;
+		}		
+	}
+	return da;
 }
