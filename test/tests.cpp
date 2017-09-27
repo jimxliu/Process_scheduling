@@ -415,16 +415,16 @@ TEST (first_come_first_serve, goodInputD) {
     memset(sr,0,sizeof(ScheduleResult_t));
     // add PCBs now
     ProcessControlBlock_t data[10] = {
-        [0] = {1,0,0},
-        [1] = {2,0,0},
-        [2] = {3,0,0},
-        [3] = {4,0,0},
-		[4] = {5,0,0},
-		[5] = {6,0,0},
-        [6] = {7,0,0},
-        [7] = {8,0,0},
-		[8] = {9,0,0},
-		[9] = {10,0,0}
+        [0] = {10,0,0},
+        [1] = {9,0,0},
+        [2] = {8,0,0},
+        [3] = {7,0,0},
+		[4] = {6,0,0},
+		[5] = {5,0,0},
+        [6] = {4,0,0},
+        [7] = {3,0,0},
+		[8] = {2,0,0},
+		[9] = {1,0,0}
     };
     // back loading dyn_array, pull from the back
     dyn_array_push_back(pcbs,&data[9]);
@@ -466,7 +466,7 @@ TEST (first_come_first_serve, goodInputE) {
     dyn_array_push_back(pcbs,&data[0]);	
     bool res = first_come_first_serve (pcbs,sr);	
     ASSERT_EQ(true,res);
-    float answers[3] = {10,2,30};
+    float answers[3] = {13,3,30};
     ASSERT_EQ(answers[0],sr->average_wall_clock_time);
     ASSERT_EQ(answers[1],sr->average_latency_time);
     ASSERT_EQ(answers[2],sr->total_run_time);
