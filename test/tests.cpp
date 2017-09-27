@@ -374,7 +374,11 @@ TEST (first_come_first_serve, badInput) {
     dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
 	memset(sr,0,sizeof(ScheduleResult_t));
     // add PCBs now, but initialize to NULL;
-    ProcessControlBlock_t data[3] = {NULL};
+    ProcessControlBlock_t data[3] = {
+        [0] = {-4,0,0};
+        [1] = {2,0,0};
+        [2] = {6,0,0};
+    };
     // back loading dyn_array, pull from the back
     dyn_array_push_back(pcbs,&data[2]);
     dyn_array_push_back(pcbs,&data[1]);
