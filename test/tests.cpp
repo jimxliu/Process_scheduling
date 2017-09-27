@@ -431,7 +431,7 @@ TEST (first_come_first_serve, goodInputC) {
     score+=10;
 }
 
-TEST (first_come_first_serve, goodInputC) {
+TEST (first_come_first_serve, goodInputD) {
     ScheduleResult_t *sr = new ScheduleResult_t;
     dyn_array_t* pcbs = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
     memset(sr,0,sizeof(ScheduleResult_t));
