@@ -20,7 +20,7 @@ class GradeEnvironment : public testing::Environment {
         virtual void SetUp() {
             score = 0;
 #if GRAD_TESTS
-            total = 340;
+            total = 280;
 
 #else
             total = 220;
