@@ -161,7 +161,7 @@ TEST (round_robin, goodInputD) {
     dyn_array_push_back(pcbs,&data[0]);	
     bool res = round_robin (pcbs,sr,QUANTUM);	
     ASSERT_EQ(true,res);
-    float answers[3] = {41.8,31.5,52};
+    float answers[3] = {41.8,31.4,52};
     ASSERT_FLOAT_EQ(answers[0],sr->average_wall_clock_time);
     ASSERT_FLOAT_EQ(answers[1],sr->average_latency_time);
     ASSERT_EQ(answers[2],sr->total_run_time);
