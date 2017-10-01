@@ -19,7 +19,7 @@ bool first_come_first_serve(dyn_array_t *ready_queue, ScheduleResult_t *result) 
       		uint32_t latency_total = 0;
 		unsigned long run_total = 0;
 		while(dyn_array_size(ready_queue) > 0){
-			// push the first object last, pull it first from back
+			// pull the first object from back
 			ProcessControlBlock_t *pcb = dyn_array_back(ready_queue); 
 			if(!pcb){
 				return false;
@@ -29,6 +29,9 @@ bool first_come_first_serve(dyn_array_t *ready_queue, ScheduleResult_t *result) 
 				return false;
 			}
 			run_total = run_total + pcb->remaining_burst_time;
+			while(pcb->remaining_burst_time > 0){
+				virtual_cpu(pcb);
+			}
 			if(!dyn_array_pop_back(ready_queue)){
 				return false;
 			}
@@ -60,7 +63,41 @@ bool priority(dyn_array_t *ready_queue, ScheduleResult_t *result) {
 
 #ifdef GRAD_TESTS
 bool round_robin(dyn_array_t *ready_queue, ScheduleResult_t *result, size_t quantum) {
-    return false;
+    	if(ready_queue && result){
+		size_t size = dyn_array_size(ready_queue);
+		size_t run_total = 0;
+		size_t wall_clock = 0;
+		size_t i=0;
+		while(dyn_array_size(ready_queue) > 0){
+			size_t count = 0;
+			ProcessControlBlock_t *pcb = dyn_array_back(ready_queue);
+			while(pcb->remaining_burst_time > 0 && count < quantum){
+				virtual_cpu(pcb);
+				count++;
+			}
+			run_total = run_total + count;
+			if(pcb->remaining_burst_time <= 0){
+				if(!dyn_array_pop_back(ready_queue)){
+					return false;
+				}
+				wall_clock = wall_clock + run_total;
+			} else {
+				ProcessControlBlock_t * updated_pcb = malloc(sizeof(ProcessControlBlock_t));
+				if(!dyn_array_extract_back(ready_queue, updated_pcb) || !dyn_array_push_front(ready_queue, updated_pcb)){
+					free(updated_pcb);	
+					return false;
+				} else {
+					free(updated_pcb);	
+				}
+			}					
+		}
+		result->average_latency_time = (float) (wall_clock - run_total)/size;
+		result->average_wall_clock_time = (float) wall_clock/size;
+		result->total_run_time = run_total;	
+		return true;	
+	}
+	
+	return false;
 }
 #endif
 
