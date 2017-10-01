@@ -20,7 +20,7 @@ class GradeEnvironment : public testing::Environment {
         virtual void SetUp() {
             score = 0;
 #if GRAD_TESTS
-            total = 250;
+            total = 340;
 
 #else
             total = 220;
@@ -131,7 +131,7 @@ TEST (round_robin, goodInputC) {
     dyn_array_push_back(pcbs,&data[0]);	
     bool res = round_robin (pcbs,sr,QUANTUM);	
     ASSERT_EQ(true,res);
-    float answers[3] = {21.5,6,31};
+    float answers[3] = {21.5,13.75,31};
     ASSERT_FLOAT_EQ(answers[0],sr->average_wall_clock_time);
     ASSERT_FLOAT_EQ(answers[1],sr->average_latency_time);
     ASSERT_EQ(answers[2],sr->total_run_time);
@@ -161,7 +161,7 @@ TEST (round_robin, goodInputD) {
     dyn_array_push_back(pcbs,&data[0]);	
     bool res = round_robin (pcbs,sr,QUANTUM);	
     ASSERT_EQ(true,res);
-    float answers[3] = {41.8,8,52};
+    float answers[3] = {41.8,31.5,52};
     ASSERT_FLOAT_EQ(answers[0],sr->average_wall_clock_time);
     ASSERT_FLOAT_EQ(answers[1],sr->average_latency_time);
     ASSERT_EQ(answers[2],sr->total_run_time);
@@ -191,7 +191,7 @@ TEST (round_robin, goodInputE) {
     dyn_array_push_back(pcbs,&data[0]);	
     bool res = round_robin (pcbs,sr,6);	
     ASSERT_EQ(true,res);
-    float answers[3] = {40.4,17.2,52};
+    float answers[3] = {40.4,30,52};
     ASSERT_FLOAT_EQ(answers[0],sr->average_wall_clock_time);
     ASSERT_FLOAT_EQ(answers[1],sr->average_latency_time);
     ASSERT_EQ(answers[2],sr->total_run_time);
