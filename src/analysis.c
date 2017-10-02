@@ -12,10 +12,10 @@
 // Add and comment your analysis code in this function.
 // THIS IS NOT FINISHED.
 int main(int argc, char **argv) {
-    if (argc < 3) {
-        printf("Missing parameters \n %s <pcb file> <schedule algorithm> [quantum]\n", argv[0]);
-        return EXIT_FAILURE;
-    } else if (argc == 3){
+    	if (argc < 3) {
+        	printf("Missing parameters \n %s <pcb file> <schedule algorithm> [quantum]\n", argv[0]);
+        	return EXIT_FAILURE;
+	} else if (argc == 3){
 		dyn_array_t * pcbs = load_process_control_blocks(argv[1]);
 		if(!pcbs){
 			printf("Input_File_Error");
@@ -60,7 +60,16 @@ int main(int argc, char **argv) {
 			}
 		}
 	} else if (argc == 4){
-		
+		if(strcmp(argv[2],RR) == 0){	
+			dyn_array_t * pcbs = load_process_control_blocks(argv[1]);
+			ScheduleResult_t *sr = malloc(sizeof(ScheduleResult_t));
+			if(pcbs && round_robin(pcbs,sr,strtol(argv[3],NULL,10))){
+				printf("Input_File_Error");
+				return EXIT_FAILURE;
+			} else {
+				
+			}	
+		}
 	} else {
 		printf("Too many parameters \n %s <pcb file> <schedule algorithm> [quantum]\n", argv[0]);
 		return EXIT_FAILURE;
