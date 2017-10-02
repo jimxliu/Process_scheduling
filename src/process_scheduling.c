@@ -61,7 +61,7 @@ bool priority(dyn_array_t *ready_queue, ScheduleResult_t *result) {
    	return false;   
 }
 
-#ifdef GRAD_TESTS
+ #ifdef GRAD_TESTS
 bool round_robin(dyn_array_t *ready_queue, ScheduleResult_t *result, size_t quantum) {
     	if(ready_queue && result){
 		size_t size = dyn_array_size(ready_queue);
