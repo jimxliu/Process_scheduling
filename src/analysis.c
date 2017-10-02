@@ -55,8 +55,12 @@ int main(int argc, char **argv) {
 			} else {	
 					free(sr);
 					dyn_array_destroy(pcbs);
-					printf("Algorithm not found\n");
-					return EXIT_FAILURE;	
+					if(strcmp(argv[2].RR)==0){
+					    printf("Round Robin needs parameter 'quantum'\n %s <pcb file> <schedule algorithm> [quantum]\n", argv[0]");
+					} else {
+					    printf("Algorithm not found\n  %s <pcb file> <schedule algorithm> [quantum]\n", argv[0]");
+					}
+				    return EXIT_FAILURE;	
 			}
 		}
 	} else if (argc == 4){
