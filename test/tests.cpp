@@ -668,10 +668,10 @@ TEST (load_process_control_blocks, fullFoundFile) {
 
 TEST (load_process_control_blocks, anotherFullFoundFile) {
     const char* fname = "../test/anotherPCBs.bin";
-    uint32_t pcb_num = NUM_PCB;
-    uint32_t pcbs[NUM_PCB][2];
+    uint32_t pcb_num = NUM_PCB*2;
+    uint32_t pcbs[NUM_PCB*2][2];
     for (uint32_t p = 0; p < pcb_num; ++p) {
-        pcbs[p][0] = rand() % 10 + 5;
+        pcbs[p][0] = rand() % 30 + 5;
         pcbs[p][1] = p;
     }
     mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP;
