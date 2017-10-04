@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
 			dyn_array_t * pcbs = load_process_control_blocks(argv[1]);
 			ScheduleResult_t *sr = malloc(sizeof(ScheduleResult_t));
 			if(round_robin(pcbs,sr,(size_t)atoi(argv[3]))){
-				printf("File: %s Algorithm: Round Robin \n",argv[1]);
+				printf("File: %s Algorithm: Round Robin Quantum: %s \n",argv[1],argv[3]);
 				printf("Average wall lock time: %f\n",sr->average_wall_clock_time);
 				printf("Average latency time: %f\n",sr->average_latency_time);
 				printf("Total run time: %lu\n", sr->total_run_time);
