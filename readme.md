@@ -20,3 +20,12 @@ Milestone 0:
     ----  
     Add your scheduling algorithm analysis below this line  
     ----
+    
+1. First Come First Serve
+File: ../test/myPCBs.bin Algorithm: FCFS 
+Average wall lock time: 568.933350
+Average latency time: 549.766663
+Total run time: 1150 
+real	0m0.003s
+user	0m0.001s
+sys		0m0.002s
