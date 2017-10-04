@@ -22,6 +22,7 @@ Milestone 0:
     ----
     
 1. First Come First Serve
+
 File: ../test/myPCBs.bin Algorithm: FCFS 
 Average wall lock time: 568.933350
 Average latency time: 549.766663
