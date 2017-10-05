@@ -32,7 +32,7 @@ Milestone 0:
     sys    0m0.002s
 
 ### Priority     
-    File: ../test/myPCBs.bin Algorithm: Priority 
+    File: ../test/myPCBs.bin Algorithm: P 
     Average wall lock time: 600.233337
     Average latency time: 581.066650
     Total run time: 1150
@@ -42,7 +42,7 @@ Milestone 0:
     sys		0m0.000s
 
 ### Round Robin    
-    File: ../test/myPCBs.bin Algorithm: Round Robin Quantum: 10 
+    File: ../test/myPCBs.bin Algorithm: RR Quantum: 10 
     Average wall lock time: 800.716675
     Average latency time: 781.549988
     Total run time: 1150
