@@ -47,7 +47,7 @@ bool first_come_first_serve(dyn_array_t *ready_queue, ScheduleResult_t *result) 
 int compare_reversed_priority(const void *a, const void *b){ // compares the priority number of two PCB, the bigger number, the lower priority
 	ProcessControlBlock_t *pa = (ProcessControlBlock_t *)a;	
 	ProcessControlBlock_t *pb = (ProcessControlBlock_t *)b;
-	return (int) (pb->priority - pa->priority);	
+	return (int) (pb->priority - pa->priority); // PCB with higher priority will be put towards the back of the queue	
 }
 
 bool priority(dyn_array_t *ready_queue, ScheduleResult_t *result) {
