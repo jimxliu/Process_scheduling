@@ -1,6 +1,6 @@
 # Process Scheduling
 
-Algorithms implemented:
+    Algorithms implemented:
     - First Come First Serve
     - Priority
     - Round Robin
