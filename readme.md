@@ -1,25 +1,13 @@
-# Assignment 4
+# Process Scheduling
 
-Milestone 0:  
-    Due: Thursday, September 28 3:30 PM
-- ALL Unit tests (function implementation not necessary)
-    - CMake
+Algorithms implemented:
+    - First Come First Serve
+    - Priority
+    - Round Robin
 
-    Milestone 1:  
-    Due: Tuesday, October 3 3:30 PM
-    - First Come First Served scheduling
-    - PCB File Loading
-
-    Milestone 2:  
-    Due: Friday, October 6 5:00 PM
-    - Priority scheduling
-    - Scheduling statistics
-    - Grad Students / Undergrad Bonus:
-    - Round Robin scheduling
-
-    ----  
-    Add your scheduling algorithm analysis below this line  
-    ----
+----  
+The scheduling algorithm analysis is listed below
+----
     
 ### First Come First Serve        
     File: ../test/myPCBs.bin Algorithm: FCFS    
